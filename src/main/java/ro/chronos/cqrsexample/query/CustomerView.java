@@ -1,4 +1,4 @@
-package ro.chronos.cqrsexample.database;
+package ro.chronos.cqrsexample.query;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -25,6 +25,9 @@ public class CustomerView {
 
     @Column(name = "age")
     private int age;
+
+    public CustomerView() {
+    }
 
     public CustomerView(String id, String fullName, int age) {
         this.id = id;

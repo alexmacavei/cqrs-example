@@ -1,10 +1,8 @@
 package ro.chronos.cqrsexample.rest;
 
 import org.axonframework.commandhandling.gateway.CommandGateway;
-import org.axonframework.eventhandling.EventHandler;
 import ro.chronos.cqrsexample.api.CreateCustomerCommand;
-import ro.chronos.cqrsexample.api.CustomerCreatedEvent;
-import ro.chronos.cqrsexample.database.CustomerView;
+import ro.chronos.cqrsexample.query.CustomerView;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -41,10 +39,5 @@ public class CustomerEndpoint {
         String customerId = UUID.randomUUID().toString();
         commandGateway.sendAndWait(new CreateCustomerCommand(customerId, fullName, age));
         return Response.created(URI.create("http://localhost:8080/customer/" + customerId)).build();
-    }
-
-    @EventHandler
-    public void on(CustomerCreatedEvent event) {
-        em.persist(new CustomerView(event.getCustomerId(), event.getFullName(), event.getAge()));
     }
 }
